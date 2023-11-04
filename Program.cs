@@ -102,3 +102,5 @@ double totalCost =  calculate.calculateCostPerServing(recipe);
 //Выводим стоимость одной порции блюда
 Console.WriteLine($"Стоимость одной порции блюда {recipe.Name}: {totalCost} рублей");
 Console.WriteLine("****************************************************************************");
+
+Console.ReadLine();
