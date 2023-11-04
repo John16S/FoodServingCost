@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FoodServingCost
 {
+    //Класс для расчета стоимости одной порции блюда
     internal class CalculateCostPerServing
     {
         /// <summary>
@@ -17,22 +18,16 @@ namespace FoodServingCost
         /// <exception cref="ArgumentException"></exception>
         public double calculateCostPerServing(Recipe recipe)
         {
-            //Если Кол-во проудктов и необх. объемы не равын, то выводим сообщение
-            if (recipe.products.Count != recipe.required_volume.Count)
-            {
-                throw new ArgumentException("Количество продуктов и необходимые объемы должны совпадать!");
-            }
-
             double totalCost = 0;
-            for (int i = 0; i < recipe.products.Count; i++)
+            for (int i = 0; i < recipe.Products.Count; i++)
             {
                 //Рассчитываем стоимость одной единицы продукта
-                double costPerUnit = recipe.products[i].Price / recipe.products[i].Volume;
+                double costPerUnit = recipe.Products[i].Price / recipe.Products[i].Volume;
                 //Умножаем costPerUnit на необходимый объем данного продукта и добавляем это значение к общей стоимости
-                totalCost += costPerUnit * recipe.required_volume[i];
+                totalCost += costPerUnit * recipe.Required_volume[i];
             }
             //возвращаем общую стоимость блюда, разделяя totalCost на количество порций
-            return totalCost / recipe.servings;
+            return totalCost / recipe.Servings;
         }
     }
 }

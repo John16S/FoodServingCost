@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoodServingCost
 {
+    //Модель для хранение продуктов
     internal class Product
     {
         public string Name { get; set; }    //Название продукта
