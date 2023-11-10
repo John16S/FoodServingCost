@@ -16,22 +16,31 @@ while (true)
     Console.Write("Продукт: ");
     string input = Console.ReadLine();
 
+    //Проверка, если введен "finish", то выходим из цикла
     if (input.ToLower() == "finish") break;
 
+    //Разделяем строку по ","
     string[] productInfo = input.Split(',');
+    //Проверка на корректный ввод
     if (productInfo.Length != 3)
     {
         Console.WriteLine("Неправильный формат. Введите продукт в формате 'название, объем, стоимость'.");
         continue;
     }
 
-    // Записываем название продукта в productName
-    string productName = productInfo[0].Trim();
-
-    // Преобразовываем значения из строк productInfo[1] и productInfo[2] в числа типа double
-    if (!double.TryParse(productInfo[1], out double volume) || !double.TryParse(productInfo[2], out double price))
+    string productName;
+    // Записываем название продукта в productName если оно не пустое
+    if (!string.IsNullOrWhiteSpace(productInfo[0])) productName = productInfo[0].Trim();
+    else
     {
-        Console.WriteLine("Неверные данные для объема или стоимости продукта.");
+        Console.WriteLine("Введите имя продукта!");
+        continue;
+    }
+
+    // Преобразовываем значения из строк productInfo[1] и productInfo[2] в числа типа double и проверяем на правильный ввод
+    if (!double.TryParse(productInfo[1], out double volume) || !double.TryParse(productInfo[2], out double price) || volume < 0 || price < 0)
+    {
+        Console.WriteLine("Неверные данные для объема или стоимости продукта! (Или отрицательные данные)");
         continue;
     }
 
