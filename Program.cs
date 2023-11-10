@@ -92,10 +92,8 @@ Console.WriteLine("*************************************************************
 
 /*---------------------------------------------------Вывод резултата-----------------------------------------------------------------------*/
 
-//Создаём объект 'calculate' класса CalculateCostPerServing
-CalculateCostPerServing calculate = new CalculateCostPerServing();
-//У объекта 'calculate' вызываем метод calculateCostPerServing и записываем его результат в totalCost
-double totalCost =  calculate.calculateCostPerServing(recipe);
+//У 'recipe' вызываем метод calculateCostPerServing и записываем его результат в totalCost
+double totalCost =  recipe.calculateCostPerServing();
 //Выводим стоимость одной порции блюда
 Console.WriteLine($"Стоимость одной порции блюда {recipe.Name}: {totalCost} рублей");
 Console.WriteLine("****************************************************************************");
