@@ -8,7 +8,7 @@ Console.InputEncoding = Encoding.UTF8;
 /*------------------------------------------------Ввод Продуктов---------------------------------------------------------*/
 //Лист для хранение продуктов
 List<Product> products = new List<Product>();
-Console.WriteLine("Введите информацию о продуктах (название, объем, стоимость) или 'finish' для завершения ввода:");
+Console.WriteLine("Введите информацию о продуктах (название, объем, стоимость) или 'f (finish)' для завершения ввода:");
 Console.WriteLine("****************************************************************************");
 //Пока не введено "finish", просим пользователя вводит данные продуков
 while (true)
@@ -17,7 +17,7 @@ while (true)
     string input = Console.ReadLine();
 
     //Проверка, если введен "finish", то выходим из цикла
-    if (input.ToLower() == "finish") break;
+    if (input.ToLower() == "f" || input.ToLower() == "finish") break;
 
     //Разделяем строку по ","
     string[] productInfo = input.Split(',');
@@ -37,22 +37,61 @@ while (true)
         continue;
     }
 
-    // Преобразовываем значения из строк productInfo[1] и productInfo[2] в числа типа double и проверяем на правильный ввод
-    if (!double.TryParse(productInfo[1], out double volume) || !double.TryParse(productInfo[2], out double price) || volume < 0 || price < 0)
+    //Флаг для проверки уже существующего продукта
+    bool productExists = false;
+
+    foreach(var product in products)
     {
-        Console.WriteLine("Неверные данные для объема или стоимости продукта! (Или отрицательные данные)");
-        continue;
+        //если продукт найден в списке...
+        if(product.Name.ToLower() == productName.ToLower())
+        {
+            productExists = true;   //изменяем статус флага
+            //Выводим сообщение и спрашиваем у пользователя...
+            Console.Write($"Продукт {productName} уже добавлен. Хотите обновить объем и стоимость продукта? (y/n): ");
+            string updateChoice = Console.ReadLine().ToLower();
+
+            //Если ответ да, то обновляем
+            if (updateChoice == "y")
+            {
+                // Преобразовываем значения из строк productInfo[1] и productInfo[2] в числа типа double и проверяем на правильный ввод
+                if (!double.TryParse(productInfo[1], out double newVolume) || !double.TryParse(productInfo[2], out double newPrice) || newVolume < 0 || newPrice < 0)
+                {
+                    Console.WriteLine("Неверные данные для объема или стоимости продукта! (Или отрицательные данные)");
+                    continue;
+                }
+                else
+                {
+                    // Обновляем объем и стоимость продукта
+                    product.Volume = double.Parse(productInfo[1]);
+                    product.Price = double.Parse(productInfo[2]);
+                    Console.WriteLine("Продукт обновлён!");
+                }
+            }
+            else continue;  //иначе продолжаем ввод нового продукта
+
+        }
     }
 
-    // Создаём новый объект Product и сразу записываем данные продукта, затем этот объект добавляем в список products
-    products.Add(new Product { Name = productName, Volume = volume, Price = price });
+    //Если же продукта еще нет в списке, то добавляем его
+    if (!productExists) 
+    {
+        // Преобразовываем значения из строк productInfo[1] и productInfo[2] в числа типа double и проверяем на правильный ввод
+        if (!double.TryParse(productInfo[1], out double volume) || !double.TryParse(productInfo[2], out double price) || volume < 0 || price < 0)
+        {
+            Console.WriteLine("Неверные данные для объема или стоимости продукта! (Или отрицательные данные)");
+            continue;
+        }
+
+        // Создаём новый объект Product и сразу записываем данные продукта, затем этот объект добавляем в список products
+        products.Add(new Product { Name = productName, Volume = volume, Price = price });
+    }
 }
 
 /*------------------------------------------------Ввод рецепта--------------------------------------------------------------------------*/
 Console.WriteLine("****************************************************************************");
 //Вводим данные рецепта
 Console.Write("Введите название Рецепта: ");
-string recipeName = Console.ReadLine();
+string recipeName = Console.ReadLine(); //Может быть null (то есть вводить по желанию!)
 
 //Лист для объёма ингридиентов
 List<double> required_volume = new List<double>();
@@ -66,11 +105,11 @@ foreach (var product in products)
     {
         if (!int.TryParse(Console.ReadLine(), out int volume))
         {
-            Console.WriteLine("\tНеправильное объём(количество). Введите целое число");
+            Console.Write("\tНеправильное объём(количество). Введите целое число: ");
         }
         else if (volume == 0 || volume > product.Volume)
         {
-            Console.WriteLine("\tНеобходимый объём не может быть равен 0 или больше самого объёма");
+            Console.Write("\tНеобходимый объём не может быть равен 0 или больше самого объёма: ");
         }
         else
         {
@@ -84,7 +123,7 @@ foreach (var product in products)
 Console.Write("Введите количество порций блюда: ");
 if (!int.TryParse(Console.ReadLine(), out int servings))
 {
-    Console.WriteLine("Неправильное количество порций. Введите целое число");
+    Console.Write("Неправильное количество порций. Введите целое число: ");
     return;
 }
 
