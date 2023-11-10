@@ -9,9 +9,14 @@ namespace FoodServingCost
     //Модель для хранение рецепта
     internal class Recipe
     {
-        public string Name { get; set; }    //Название рецепта
-        public List<Product> Products { get; set; } //Лист продуктов необх. для рецепта
-        public List<double> Required_volume { get; set; }   //Лист необх-го объёма каждого продукта
-        public int Servings { get; set; }   // Кол-во порций
+        string name;                    //Название рецепта
+        List<Product> products;         //Лист продуктов необх. для рецепта
+        List<double> requiredVolume;    //Лист необх-го объёма каждого продукта
+        int servings;                   // Кол-во порций
+
+        public string Name { get => name; set => name = value; }
+        public List<double> RequiredVolume { get => requiredVolume; set => requiredVolume = value; }
+        public int Servings { get => servings; set => servings = value; }
+        public List<Product> Products { get => products; set => products = value; }
     }
 }

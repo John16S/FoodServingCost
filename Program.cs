@@ -16,10 +16,7 @@ while (true)
     Console.Write("Продукт: ");
     string input = Console.ReadLine();
 
-    if (input.ToLower() == "finish")
-    {
-        break;
-    }
+    if (input.ToLower() == "finish") break;
 
     string[] productInfo = input.Split(',');
     if (productInfo.Length != 3)
@@ -87,7 +84,7 @@ Recipe recipe = new Recipe()
 {
     Name = recipeName,
     Products = products,
-    Required_volume = required_volume,
+    RequiredVolume = required_volume,
     Servings = servings
 };
 

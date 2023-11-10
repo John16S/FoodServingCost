@@ -24,7 +24,7 @@ namespace FoodServingCost
                 //Рассчитываем стоимость одной единицы продукта
                 double costPerUnit = recipe.Products[i].Price / recipe.Products[i].Volume;
                 //Умножаем costPerUnit на необходимый объем данного продукта и добавляем это значение к общей стоимости
-                totalCost += costPerUnit * recipe.Required_volume[i];
+                totalCost += costPerUnit * recipe.RequiredVolume[i];
             }
             //возвращаем общую стоимость блюда, разделяя totalCost на количество порций
             return totalCost / recipe.Servings;

@@ -9,8 +9,12 @@ namespace FoodServingCost
     //Модель для хранение продуктов
     internal class Product
     {
-        public string Name { get; set; }    //Название продукта
-        public double Volume { get; set; }  //Объём (количество)
-        public double Price { get; set; }   //Стоимость
+        string name;        //Название продукта
+        double volume;      //Объём (количество)
+        double price;       //Стоимость
+
+        public string Name { get => name; set => name = value; }
+        public double Volume { get => volume; set => volume = value; }
+        public double Price { get => price; set => price = value; }
     }
 }
