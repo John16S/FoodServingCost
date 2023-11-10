@@ -76,7 +76,7 @@ while (true)
     if (!productExists) 
     {
         // Преобразовываем значения из строк productInfo[1] и productInfo[2] в числа типа double и проверяем на правильный ввод
-        if (!double.TryParse(productInfo[1], out double volume) || !double.TryParse(productInfo[2], out double price) || volume < 0 || price < 0)
+        if (!double.TryParse(productInfo[1], out double volume) || !double.TryParse(productInfo[2], out double price) || volume <= 0 || price < 0)
         {
             Console.WriteLine("Неверные данные для объема или стоимости продукта! (Или отрицательные данные)");
             continue;
@@ -103,14 +103,8 @@ foreach (var product in products)
     //Используем цикл чтоб при неправильном вводе прога не закрывалась
     while (true)
     {
-        if (!int.TryParse(Console.ReadLine(), out int volume))
-        {
-            Console.Write("\tНеправильное объём(количество). Введите целое число: ");
-        }
-        else if (volume == 0 || volume > product.Volume)
-        {
-            Console.Write("\tНеобходимый объём не может быть равен 0 или больше самого объёма: ");
-        }
+        if (!int.TryParse(Console.ReadLine(), out int volume)) Console.Write("\tНеправильное объём(количество). Введите целое число: ");
+        else if (volume <= 0 || volume > product.Volume) Console.Write("\tНеобходимый объём не может быть равен 0 или больше самого объёма: ");
         else
         {
             required_volume.Add(volume);
@@ -121,10 +115,15 @@ foreach (var product in products)
 
 //Вводим количество порций
 Console.Write("Введите количество порций блюда: ");
-if (!int.TryParse(Console.ReadLine(), out int servings))
+int servings;
+while (true)
 {
-    Console.Write("Неправильное количество порций. Введите целое число: ");
-    return;
+    if (!int.TryParse(Console.ReadLine(), out int serv) || serv <= 0) Console.Write("Неправильное количество порций. Введите целое число: ");
+    else
+    {
+        servings = serv;
+        break;
+    }
 }
 
 //Создаём объект и заполняем его данными
