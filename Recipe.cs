@@ -10,14 +10,12 @@ namespace FoodServingCost
     internal class Recipe
     {
         private string name;                    //Название рецепта
-        private List<Product> products;         //Лист продуктов необх. для рецепта
-        private List<double> requiredVolume;    //Лист необх-го объёма каждого продукта
-        private int servings;                   // Кол-во порций
+        private List<Ingredient> ingredients;   //Лист ингредиентов
+        private int servings;                   //Кол-во порций
 
         public string Name { get => name; set => name = value; }
-        public List<double> RequiredVolume { get => requiredVolume; set => requiredVolume = value; }
+        public List<Ingredient> Ingredients{ get => ingredients; set => ingredients = value; }
         public int Servings { get => servings; set => servings = value; }
-        public List<Product> Products { get => products; set => products = value; }
 
 
         /// <summary>
@@ -27,15 +25,15 @@ namespace FoodServingCost
         public double calculateCostPerServing()
         {
             double totalCost = 0;
-            for (int i = 0; i < products.Count; i++)
+            for (int i = 0; i < Ingredients.Count; i++)
             {
                 //Рассчитываем стоимость одной единицы продукта
-                double costPerUnit = products[i].Price / products[i].Volume;
+                double costPerUnit = Ingredients[i].Product.Price / Ingredients[i].Product.Volume;
                 //Умножаем costPerUnit на необходимый объем данного продукта и добавляем это значение к общей стоимости
-                totalCost += costPerUnit * requiredVolume[i];
+                totalCost += costPerUnit * Ingredients[i].RequiredVolume;
             }
             //возвращаем общую стоимость блюда, разделяя totalCost на количество порций
-            return Math.Round((totalCost / servings), 2);
+            return totalCost / Servings;
         }
     }
 }

@@ -36,6 +36,12 @@ while (true)
         Console.WriteLine("Введите имя продукта!");
         continue;
     }
+    // Преобразовываем значения из строк productInfo[1] и productInfo[2] в числа типа double и проверяем на правильный ввод
+    if (!double.TryParse(productInfo[1], out double volume) || !double.TryParse(productInfo[2], out double price) || volume < 0 || price < 0)
+    {
+        Console.WriteLine("Неверные данные для объема или стоимости продукта! (Или отрицательные данные)");
+        continue;
+    }
 
     //Флаг для проверки уже существующего продукта
     bool productExists = false;
@@ -53,19 +59,10 @@ while (true)
             //Если ответ да, то обновляем
             if (updateChoice == "y")
             {
-                // Преобразовываем значения из строк productInfo[1] и productInfo[2] в числа типа double и проверяем на правильный ввод
-                if (!double.TryParse(productInfo[1], out double newVolume) || !double.TryParse(productInfo[2], out double newPrice) || newVolume < 0 || newPrice < 0)
-                {
-                    Console.WriteLine("Неверные данные для объема или стоимости продукта! (Или отрицательные данные)");
-                    continue;
-                }
-                else
-                {
-                    // Обновляем объем и стоимость продукта
-                    product.Volume = double.Parse(productInfo[1]);
-                    product.Price = double.Parse(productInfo[2]);
-                    Console.WriteLine("Продукт обновлён!");
-                }
+                // Обновляем объем и стоимость продукта
+                product.Volume = double.Parse(productInfo[1]);
+                product.Price = double.Parse(productInfo[2]);
+                Console.WriteLine("Продукт обновлён!");
             }
             else continue;  //иначе продолжаем ввод нового продукта
 
@@ -75,13 +72,6 @@ while (true)
     //Если же продукта еще нет в списке, то добавляем его
     if (!productExists) 
     {
-        // Преобразовываем значения из строк productInfo[1] и productInfo[2] в числа типа double и проверяем на правильный ввод
-        if (!double.TryParse(productInfo[1], out double volume) || !double.TryParse(productInfo[2], out double price) || volume <= 0 || price < 0)
-        {
-            Console.WriteLine("Неверные данные для объема или стоимости продукта! (Или отрицательные данные)");
-            continue;
-        }
-
         // Создаём новый объект Product и сразу записываем данные продукта, затем этот объект добавляем в список products
         products.Add(new Product { Name = productName, Volume = volume, Price = price });
     }
