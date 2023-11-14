@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FoodServingCost
+﻿namespace FoodServingCost
 {
     //Модель для хранение рецепта
     internal class Recipe
     {
         private string name;                    //Название рецепта
         private List<Ingredient> ingredients;   //Лист ингредиентов
-        private int servings;                   //Кол-во порций
+        private double servings;                   //Кол-во порций
 
         public string Name { get => name; set => name = value; }
         public List<Ingredient> Ingredients{ get => ingredients; set => ingredients = value; }
-        public int Servings { get => servings; set => servings = value; }
+        public double Servings { get => servings; set => servings = value; }
 
 
         /// <summary>
